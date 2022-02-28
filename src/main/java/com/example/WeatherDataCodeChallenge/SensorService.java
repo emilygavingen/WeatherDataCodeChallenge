@@ -15,8 +15,9 @@ public class SensorService {
         return sensorRepository.findAll();
     }
 
+    //Dub key error
     public Sensor addNewSensor(Sensor sensor){
-        return sensorRepository.save(sensor);
+        return sensorRepository.insert(sensor);
     }
 
     public Sensor findById(String id) {
@@ -27,4 +28,9 @@ public class SensorService {
     public boolean exists(String id) {
         return sensorRepository.existsById(id);
     }
+
+    //
+//    public Sensor createNewVersion(Sensor sensor) {
+//        return sensorRepository.
+//    }
 }

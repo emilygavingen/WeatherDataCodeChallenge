@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MetricsService {
 
-    @Autowired
     private final MetricsRepository metricsRepository;
 
+    //Maybe problem here?
     public Metrics createNewVersion (Metrics sensor){
-        return metricsRepository.insert(sensor);
+        return metricsRepository.save(sensor);
     }
 }
