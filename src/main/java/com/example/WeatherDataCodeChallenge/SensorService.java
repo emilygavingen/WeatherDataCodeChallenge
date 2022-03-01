@@ -1,6 +1,9 @@
 package com.example.WeatherDataCodeChallenge;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 public class SensorService {
 
+    private static final Logger log = LoggerFactory.getLogger(SensorController.class);
     private final SensorRepository sensorRepository;
 
     public List<Sensor> getAllSensors() {
         return sensorRepository.findAll();
     }
 
-    //Dub key error
     public Sensor addNewSensor(Sensor sensor){
         return sensorRepository.insert(sensor);
     }
@@ -25,12 +28,21 @@ public class SensorService {
         return sensor;
     }
 
-    public boolean exists(String id) {
-        return sensorRepository.existsById(id);
+    public boolean exists(String sensorId) {
+        return sensorRepository.existsById(sensorId);
     }
 
-    //
-//    public Sensor createNewVersion(Sensor sensor) {
-//        return sensorRepository.
-//    }
+    public Sensor getBySensorId(String sensorId) {
+        Sensor sensor = sensorRepository.findBySensorId(sensorId);
+        if (sensor == null) {
+            log.info("Sensor ID number {} has not been registered", sensorId);
+            throw new IllegalStateException("Index is out of bounds");
+        } else {
+            return sensor;
+        }
+    }
+
+    public Sensor createNewVersion (Sensor sensor){
+        return sensorRepository.insert(sensor);
+    }
 }
