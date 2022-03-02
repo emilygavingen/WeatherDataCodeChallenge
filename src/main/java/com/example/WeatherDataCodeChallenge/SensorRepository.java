@@ -2,6 +2,8 @@ package com.example.WeatherDataCodeChallenge;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 public interface SensorRepository extends MongoRepository<Sensor, String> {
-    Sensor findBySensorId(String sensorId);
+    List<Sensor> findAllBySensorIdOrderByLocalDateTimeDesc(String sensorId);
 }

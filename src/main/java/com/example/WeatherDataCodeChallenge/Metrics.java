@@ -18,8 +18,6 @@ public class Metrics {
     private double temperature;
     private double humidity;
     private double windSpeed;
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime LocalDateTime;
 
     public Metrics() {
     }

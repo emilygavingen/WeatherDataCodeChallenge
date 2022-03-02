@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @RestController
@@ -29,65 +28,56 @@ public class SensorController {
     @ResponseStatus(HttpStatus.CREATED)
     public Sensor registerNewSensor(@RequestBody Sensor sensor) {
         if (sensor.getSensorId() == null) {
+            String newSensorId = UUID.randomUUID().toString();
+            //sensor.setLocalDateTime(LocalDateTime.now());
+            sensor.setSensorId(newSensorId);
             return sensorService.addNewSensor(sensor);
-        } else if (!sensorService.exists(sensor.getSensorId())) {
+        }
+        else if(sensorService.findById(sensor.getSensorId()) == null){
+            //sensor.setLocalDateTime(LocalDateTime.now());
             return sensorService.addNewSensor(sensor);
-        } else {
+        }
+        else {
             log.info("Sensor ID number taken");
             throw new IllegalStateException("Index is out of bounds");
         }
     }
 
-    // Need to create new instance of sensorId/cityName/countryName with updated metricId/metrics/time
+    //Used when adding metrics values to a sensor
     @PostMapping(path = "/{sensorId}")
     @ResponseStatus(HttpStatus.CREATED)
     public Sensor updateSensor(@RequestBody Metrics metrics, @PathVariable String sensorId) {
 
-            sensorService.getBySensorId(sensorId);
+            //sensorService.getBySensorId(sensorId);
             log.info("Sensor ID is: {}", sensorId);
             //Find sensor to insert metrics into
             Sensor sensor = sensorService.findById(sensorId);
-            //Checks to see if initial sensor object is populated, if not, it fills it
-            if (sensor.getMetrics() == null) {
-                metrics.setLocalDateTime(LocalDateTime.now());
-                sensor.setMetrics(metrics);
-//                String id = UUID.randomUUID().toString();
-//                sensor.setMetricId(id);
-                return sensorService.addNewSensor(sensor);
+            if (sensor == null) {
+                log.info("Sensor ID number {} has not been registered", sensorId);
+                throw new IllegalStateException("Index is out of bounds");
             }
-            //If metrics are full, create a new version with updated metrics
             else {
-                metrics.setLocalDateTime(LocalDateTime.now());
-                sensor.setMetrics(metrics);
-                String id = UUID.randomUUID().toString();
-                sensor.setMetricId(id);
-                sensorService.createNewVersion(sensor);
-                return sensorService.addNewSensor(sensor);
-            }
-    }
-
-    //Search for sensor by id
-    @RequestMapping(value = "/sensorId/{id}")
-    public Sensor getSensorById(@PathVariable String id) {
-        return sensorService.findById(id);
-    }
-
-    //Search by metric ID
-    @RequestMapping(value = "/sensorId/{sensorId}/metricId/{metricId}")
-    public Sensor getMetricById(@PathVariable String sensorId, @PathVariable String metricId) {
-       //sensorService.findById(sensorId);
-       return sensorService.findById(metricId);
-    }
-
-    public class Generator {
-        public String generateRandomPassword(int len) {
-            String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk"
-                    +"lmnopqrstuvwxyz";
-            Random rnd = new Random();
-            StringBuilder sb = new StringBuilder(len);
-            for (int i = 0; i < len; i++)
-                sb.append(chars.charAt(rnd.nextInt(chars.length())));
-            return sb.toString();
+                //Checks to see if initial sensor object is populated, if not, it fills it
+                if (sensor.getMetrics() == null) {
+                    sensor.setLocalDateTime(LocalDateTime.now());
+                    sensor.setMetrics(metrics);
+                    return sensorService.addNewSensor(sensor);
+                }
+                //If metrics are full, create a new version with updated metrics
+                else {
+                    sensor.setLocalDateTime(LocalDateTime.now());
+                    sensor.setMetrics(metrics);
+                    //creates new random metricId value
+                    String newMetricId = UUID.randomUUID().toString();
+                    sensor.setMetricId(newMetricId);
+                    sensorService.createNewVersion(sensor);
+                    return sensorService.addNewSensor(sensor);
+                }
         }
+    }
+
+    @RequestMapping("/bySensorId/{sensorId}")
+    public List<Sensor> bySensorId(@PathVariable(value = "sensorId") String sensorId){
+        return sensorService.bySensorId(sensorId);
     }
 }
