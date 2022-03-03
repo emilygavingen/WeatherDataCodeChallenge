@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -29,12 +30,10 @@ public class SensorController {
     public Sensor registerNewSensor(@RequestBody Sensor sensor) {
         if (sensor.getSensorId() == null) {
             String newSensorId = UUID.randomUUID().toString();
-            //sensor.setLocalDateTime(LocalDateTime.now());
             sensor.setSensorId(newSensorId);
             return sensorService.addNewSensor(sensor);
         }
         else if(sensorService.findById(sensor.getSensorId()) == null){
-            //sensor.setLocalDateTime(LocalDateTime.now());
             return sensorService.addNewSensor(sensor);
         }
         else {
@@ -48,8 +47,6 @@ public class SensorController {
     @ResponseStatus(HttpStatus.CREATED)
     public Sensor updateSensor(@RequestBody Metrics metrics, @PathVariable String sensorId) {
 
-            //sensorService.getBySensorId(sensorId);
-            log.info("Sensor ID is: {}", sensorId);
             //Find sensor to insert metrics into
             Sensor sensor = sensorService.findById(sensorId);
             if (sensor == null) {
@@ -78,6 +75,9 @@ public class SensorController {
 
     @RequestMapping("/bySensorId/{sensorId}")
     public List<Sensor> bySensorId(@PathVariable(value = "sensorId") String sensorId){
+        log.info("{}", sensorService.bySensorId(sensorId)); //Returns all objects
+        log.info("{}", sensorService.bySensorId(sensorId).stream().count()); //Returns how many objects there are
+        log.info("{}", sensorService.bySensorId(sensorId));
         return sensorService.bySensorId(sensorId);
     }
 }

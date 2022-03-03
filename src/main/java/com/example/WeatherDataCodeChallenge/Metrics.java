@@ -1,13 +1,9 @@
 package com.example.WeatherDataCodeChallenge;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.Embeddable;
-import java.time.LocalDateTime;
 
 @Data
 @Document
@@ -19,6 +15,46 @@ public class Metrics {
     private double humidity;
     private double windSpeed;
 
-    public Metrics() {
+    public Metrics() {}
+
+    public static double getTotalTemp(double[] tempArray){
+        double sum = 0;
+        for (double value : tempArray) {
+            sum += value;
+        }
+        return sum;
     }
+
+    public static double findAverageTemp(double[] tempArray) {
+        double sum = getTotalTemp(tempArray);
+        return sum / tempArray.length;
+    }
+
+
+
+//    public static double getTotalHumidity(double[] humArray){
+//        double sum = 0;
+//        for (double value : humArray) {
+//            sum += value;
+//        }
+//        return sum;
+//    }
+//
+//    public static double findAverageHumidity(double[] humArray) {
+//        double sum = getTotalHumidity(humArray);
+//        return sum / humArray.length;
+//    }
+//
+//    public static double getTotalWindSpeed(double[] windSpeedArray){
+//        double sum = 0;
+//        for (double value : windSpeedArray) {
+//            sum += value;
+//        }
+//        return sum;
+//    }
+//
+//    public static double findAverageWindSpeed(double[] windSpeedArray) {
+//        double sum = getTotalWindSpeed(windSpeedArray);
+//        return sum / windSpeedArray.length;
+//    }
 }
