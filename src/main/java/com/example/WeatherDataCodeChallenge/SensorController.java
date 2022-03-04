@@ -80,4 +80,17 @@ public class SensorController {
         log.info("{}", sensorService.bySensorId(sensorId));
         return sensorService.bySensorId(sensorId);
     }
+
+    //Need to query
+    //Where
+    //What metrics (start with them all)
+
+    @RequestMapping("/bySensorId/{sensorId}/average")
+    public List<Sensor> bySensorIdAverage(
+            @PathVariable ("sensorId") String sensorId,
+            @RequestParam (required = false) String cityName
+            //@RequestParam (required = false) String
+            ){
+        return sensorService.getSensorByCityName(sensorId, cityName);
+    }
 }
