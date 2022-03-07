@@ -81,16 +81,19 @@ public class SensorController {
         return sensorService.bySensorId(sensorId);
     }
 
-    //Need to query
+    //Need to query:
     //Where
     //What metrics (start with them all)
 
-    @RequestMapping("/bySensorId/{sensorId}/average")
-    public List<Sensor> bySensorIdAverage(
-            @PathVariable ("sensorId") String sensorId,
-            @RequestParam (required = false) String cityName
-            //@RequestParam (required = false) String
-            ){
-        return sensorService.getSensorByCityName(sensorId, cityName);
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    public List<Sensor> getAllByCityName(@RequestParam (required = false) String cityName){
+        return sensorService.findAllByCityName(cityName);
     }
+
+//      Default value = "latest"
+    @RequestMapping(value = "/time", method = RequestMethod.GET)
+    public List<Sensor> getAllByTimePeriod(@RequestParam (required = false) String start){
+        return sensorService.findAllByTimeGreaterThan(LocalDateTime.parse(start));
+    }
+
 }
