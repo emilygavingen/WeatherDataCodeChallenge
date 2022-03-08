@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -73,27 +72,15 @@ public class SensorController {
         }
     }
 
-    @RequestMapping("/bySensorId/{sensorId}")
-    public List<Sensor> bySensorId(@PathVariable(value = "sensorId") String sensorId){
-        log.info("{}", sensorService.bySensorId(sensorId)); //Returns all objects
-        log.info("{}", sensorService.bySensorId(sensorId).stream().count()); //Returns how many objects there are
-        log.info("{}", sensorService.bySensorId(sensorId));
-        return sensorService.bySensorId(sensorId);
-    }
-
-    //Need to query:
-    //Where
-    //What metrics (start with them all)
-
     @RequestMapping(value = "/query", method = RequestMethod.GET)
-    public List<Sensor> getAllByCityName(@RequestParam (required = false) String cityName){
-        return sensorService.findAllByCityName(cityName);
+    public List<Sensor> getAllByCityNameAndTimePeriod(
+            @RequestParam (required = false) String cityName,
+            @RequestParam (required = false, defaultValue = "2021-03-03T14:21:28.000") String start) {
+        return sensorService.findByCityNameAndByStartTimeIsGreaterThan(cityName, LocalDateTime.parse(start));
     }
 
-//      Default value = "latest"
-    @RequestMapping(value = "/time", method = RequestMethod.GET)
-    public List<Sensor> getAllByTimePeriod(@RequestParam (required = false) String start){
-        return sensorService.findAllByTimeGreaterThan(LocalDateTime.parse(start));
-    }
 
+    @GetMapping("/average")
+    public double getAverageMetrics() {
+        return sensorService.getAverageMetrics(); }
 }

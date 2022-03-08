@@ -3,23 +3,23 @@ package com.example.WeatherDataCodeChallenge;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SensorRepository extends MongoRepository<Sensor, String> {
 
-    public double avg();
+    //Tests for average
+//    @Aggregation(pipeline = {"{$group: {_id:"$cityName", avgMetrics:{$avg: "$metrics" }}}" })
+//    @Aggregation(pipeline = {$group: {_id:"$countryName"}})
 
-    List<Sensor> findAllBySensorIdOrderByLocalDateTimeDesc(String sensorId);
+    //@Aggregation(pipeline = "{'cityName': $cityName}, {'avgMetrics': {$avg: $metrics}}")
+    List<Sensor> findByCityNameAndLocalDateTimeIsGreaterThan(String cityName, LocalDateTime start);
 
-    //Case sensitive (limitation)
-    @Aggregation(pipeline = {"{$group: { sensorId: '', total: {$avg: $metrics }}}" })
-    public double avg(double minQuantities);
-    List<Sensor> findByCityName(String cityName);
+    @Query("SELECT AVG(u.Metrics.temperature) from Sensor u")
+    double getAverageMetrics();
 
-    @Query (value = "{'localDateTime': {$gte: ?0}}")
-    List<Sensor> findByLocalDateTimeIsGreaterThan(LocalDateTime start);
 
-    //Mongo Documentation goes here
+    db.event.aggregate([     { $unwind: "$participantList" },
+    { $group: { _id: "$_id", value: { $max: "$participantList.attendDataFrom" } } } ]);
+
 }

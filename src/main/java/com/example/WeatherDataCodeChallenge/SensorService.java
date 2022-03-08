@@ -2,7 +2,6 @@ package com.example.WeatherDataCodeChallenge;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,25 +24,16 @@ public class SensorService {
         return sensor;
     }
 
+    //Think this is doing the same as AddNewSensor -- check
     public Sensor createNewVersion (Sensor sensor){
         return sensorRepository.insert(sensor);
     }
 
-    public List<Sensor> bySensorId(String sensorId){
-        return sensorRepository.findAllBySensorIdOrderByLocalDateTimeDesc(sensorId);
+    public List<Sensor> findByCityNameAndByStartTimeIsGreaterThan(String cityName, LocalDateTime start) {
+        return sensorRepository.findByCityNameAndLocalDateTimeIsGreaterThan(cityName, start);
     }
 
-    public List<Sensor> findAllByCityName(String cityName) {
-        //Filter by cityName
-        return sensorRepository.findByCityName(cityName);
+    public double getAverageMetrics() {
+        return sensorRepository.getAverageMetrics();
     }
-
-    public List<Sensor> findAllByTimeGreaterThan(LocalDateTime start) {
-        return sensorRepository.findByLocalDateTimeIsGreaterThan(start);
-    }
-
-    public double avg() {
-        return sensorRepository.avg();
-    }
-
 }

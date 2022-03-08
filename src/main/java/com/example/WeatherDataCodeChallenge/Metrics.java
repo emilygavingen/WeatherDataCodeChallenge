@@ -16,5 +16,4 @@ public class Metrics {
     private double temperature;
     private double humidity;
     private double windSpeed;
-
 }
