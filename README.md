@@ -1,7 +1,7 @@
 # WeatherDataCodeChallenge
 ## Project Description
 This project works with a MongoDB database to hold different instances of registered sensors and their unique metrics.
-Each sensor is registered using either the clients inputted sensor ID, or if null, a generated sensor ID number. From here, the client is able to add metrics using a POST method endpoint containing the desired sensors ID number to write into and the new metrics, which will in-turn create new instances of the same sensor ID but with a new auto-generated unique Metric ID.
+Each sensor is registered using either the clients inputted sensor ID, or if null, a generated sensor ID number. From here, the client is able to add metrics using a POST method endpoint containing the desired (and previously registered) sensors ID number and the new metrics, which will in-turn create new instances of the same sensor ID but with a new auto-generated unique Metric ID.
 A series of endpoints are used to both receive and post to the database.
 
 ## Project Set-up
@@ -9,7 +9,7 @@ This project uses "Docker Desktop" as a means of storing the data, so Docker wil
 Link to Docker download page - https://www.docker.com/products/docker-desktop
 After Docker is downloaded, head to the docker-compose.yaml file that is part of this project. This file contains all the set-up needed to create the database. Press the two over-lapping green play buttons, and when this is completed, the database has been created.
 The Mongo Express page will be available to view at : http://localhost:8081/
-When this is all running correctly, by running the main "WeatherDataCodeChallenge" file, the DB should create and the project should be running.
+When this is all running correctly, by running the main "WeatherDataCodeChallenge" file, the DB should create and the project will be running.
 
 ## Command line prompts 
 docker-compose up -d
