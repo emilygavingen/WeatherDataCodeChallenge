@@ -11,6 +11,9 @@ After Docker is downloaded, head to the docker-compose.yaml file that is part of
 The Mongo Express page will be available to view at : http://localhost:8081/
 When this is all running correctly, by running the main "WeatherDataCodeChallenge" file, the DB should create and the project should be running.
 
+## Command line prompts 
+docker-compose up -d
+./mvnw spring-boot:run
 
 ## Project Endpoints and Examples
 http://localhost:8082/api/v1/sensors : Used with either GET or POST. GET will return a list of all sensors, and POST can be used to register a new sensor. E.g. of body for POST : 
