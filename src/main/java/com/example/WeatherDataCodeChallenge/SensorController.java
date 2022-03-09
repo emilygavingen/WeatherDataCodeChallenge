@@ -41,7 +41,7 @@ public class SensorController {
         }
     }
 
-    //Used when adding metrics values to a sensor
+    //POST for adding metrics values to a sensor
     @PostMapping(path = "/{sensorId}")
     @ResponseStatus(HttpStatus.CREATED)
     public Sensor updateSensor(@RequestBody Metrics metrics, @PathVariable String sensorId) {
@@ -66,7 +66,7 @@ public class SensorController {
                     //creates new random metricId value
                     String newMetricId = UUID.randomUUID().toString();
                     sensor.setMetricId(newMetricId);
-                    sensorService.createNewVersion(sensor);
+                    sensorService.addNewSensor(sensor);
                     return sensorService.addNewSensor(sensor);
                 }
         }
@@ -78,9 +78,4 @@ public class SensorController {
             @RequestParam (required = false, defaultValue = "2021-03-03T14:21:28.000") String start) {
         return sensorService.findByCityNameAndByStartTimeIsGreaterThan(cityName, LocalDateTime.parse(start));
     }
-
-
-    @GetMapping("/average")
-    public double getAverageMetrics() {
-        return sensorService.getAverageMetrics(); }
 }

@@ -10,16 +10,10 @@ public interface SensorRepository extends MongoRepository<Sensor, String> {
 
     //Tests for average
 //    @Aggregation(pipeline = {"{$group: {_id:"$cityName", avgMetrics:{$avg: "$metrics" }}}" })
-//    @Aggregation(pipeline = {$group: {_id:"$countryName"}})
+//    @Query("SELECT AVG(u.Metrics.temperature) from Sensor u")
 
-    //@Aggregation(pipeline = "{'cityName': $cityName}, {'avgMetrics': {$avg: $metrics}}")
+
+    //This query only displays the metrics, comment out for full sensor objects
+    @Query (fields = "{ 'metrics' : 1 , 'metricId' : 0}")
     List<Sensor> findByCityNameAndLocalDateTimeIsGreaterThan(String cityName, LocalDateTime start);
-
-    @Query("SELECT AVG(u.Metrics.temperature) from Sensor u")
-    double getAverageMetrics();
-
-
-    db.event.aggregate([     { $unwind: "$participantList" },
-    { $group: { _id: "$_id", value: { $max: "$participantList.attendDataFrom" } } } ]);
-
 }

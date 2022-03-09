@@ -24,16 +24,7 @@ public class SensorService {
         return sensor;
     }
 
-    //Think this is doing the same as AddNewSensor -- check
-    public Sensor createNewVersion (Sensor sensor){
-        return sensorRepository.insert(sensor);
-    }
-
     public List<Sensor> findByCityNameAndByStartTimeIsGreaterThan(String cityName, LocalDateTime start) {
         return sensorRepository.findByCityNameAndLocalDateTimeIsGreaterThan(cityName, start);
-    }
-
-    public double getAverageMetrics() {
-        return sensorRepository.getAverageMetrics();
     }
 }
