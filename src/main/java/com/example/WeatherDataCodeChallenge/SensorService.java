@@ -24,6 +24,7 @@ public class SensorService {
         return sensor;
     }
 
+
     public List<Sensor> findByCityNameAndByStartTimeIsGreaterThan(String cityName, LocalDateTime start) {
         return sensorRepository.findByCityNameAndLocalDateTimeIsGreaterThan(cityName, start);
     }
