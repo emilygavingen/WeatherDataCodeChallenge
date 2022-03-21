@@ -12,27 +12,29 @@ The Mongo Express page will be available to view at : http://localhost:8081/
 When this is all running correctly, by running the main "WeatherDataCodeChallenge" file, the DB should create and the project will be running.
 
 ## Command line prompts 
+```
 docker-compose up -d
 ./mvnw spring-boot:run
+```
 
 ## Project Endpoints and Examples
 http://localhost:8082/api/v1/sensors : Used with either GET or POST. GET will return a list of all sensors, and POST can be used to register a new sensor. E.g. of body for POST : 
-'''
+```
 {
 "sensorId": "8h3g8hcv4095h9vbik30",
 "countryName": "England",
 "cityName": "London"
 }
-'''
+```
 
 http://localhost:8082/api/v1/sensors/{{SENSOR_ID}} : This POST endpoint is used to add metrics to a specified sensor ID. E.g. of body :
-'''
+```
 {
 "temperature": 15,
 "humidity": 15,
 "windSpeed": 15
 }
-'''
+```
 
 http://localhost:8082/api/v1/sensors/query : GET method for querying data by city name and a specific time period. E.g of query :
 ?cityName=Dublin&start=2022-03-03T14:21:26.000
