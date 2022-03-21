@@ -15,8 +15,6 @@ public class WeatherDataCodeChallengeApplication {
 
 	@Bean
 	CommandLineRunner runner(SensorRepository repository, MongoTemplate mongoTemplate){
-		return args -> {
-
-		};
+		return args -> {};
 	}
 }

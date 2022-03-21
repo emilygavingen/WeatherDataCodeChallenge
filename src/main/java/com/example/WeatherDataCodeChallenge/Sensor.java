@@ -10,16 +10,15 @@ import javax.persistence.Embedded;
 
 @Data
 @Document
-public class Sensor {
-
-    private String sensorId;
-    private String countryName;
-    private String cityName;
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private java.time.LocalDateTime localDateTime;
-    @Id
-    private String metricId;
-    @Embedded
-    private Metrics metrics;
+public class Sensor{
+        private String sensorId;
+        private String countryName;
+        private String cityName;
+        @JsonDeserialize(using=LocalDateTimeDeserializer.class)
+        @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+        private java.time.LocalDateTime localDateTime;
+        @Id
+        private String metricId;
+        //@Embedded
+        private Metrics metrics;
 }
