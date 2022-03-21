@@ -37,5 +37,7 @@ http://localhost:8082/api/v1/sensors/{{SENSOR_ID}} : This POST endpoint is used 
 ```
 
 http://localhost:8082/api/v1/sensors/query : GET method for querying data by city name and a specific time period. E.g of query :
+```
 ?cityName=Dublin&start=2022-03-03T14:21:26.000
+```
 
