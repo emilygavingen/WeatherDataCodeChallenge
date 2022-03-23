@@ -24,11 +24,56 @@ public class SensorService {
                 return sensor;
         }
 
-        public List<Sensor> findByCityNameAndByStartTimeIsGreaterThan(String cityName, LocalDateTime start) {
-                return sensorRepository.findByCityNameAndLocalDateTimeIsGreaterThan(cityName, start);
+        public Averages findByCityNameAndByStartTimeIsGreaterThan(String cityName, LocalDateTime start) {
+
+                List<Sensor> sensors = sensorRepository.findByCityNameAndLocalDateTimeIsGreaterThan(cityName, start);
+                double totalTemp = 0;
+                double totalHumidity = 0;
+                double totalWindSpeed = 0;
+
+                for(Sensor sensor : sensors){
+                        totalTemp += sensor.getMetrics().getTemperature();
+                        totalHumidity += sensor.getMetrics().getHumidity();
+                        totalWindSpeed += sensor.getMetrics().getWindSpeed();
+                }
+                double avgTemp = totalTemp / sensors.size();
+                double avgHumidity = totalHumidity / sensors.size();
+                double avgWindSpeed = totalWindSpeed / sensors.size();
+
+                sensorRepository.findByCityNameAndLocalDateTimeIsGreaterThan(cityName, start);
+
+                return getAverages(avgHumidity, avgTemp, avgWindSpeed);
         }
 
-        public List<Sensor> findByStartTime(LocalDateTime start) {
-                return sensorRepository.findByLocalDateTimeIsGreaterThan(start);
+        public Averages findByStartTime(LocalDateTime start) {
+
+                List<Sensor> sensors = sensorRepository.findByLocalDateTimeIsGreaterThan(start);
+                double totalTemp = 0;
+                double totalHumidity = 0;
+                double totalWindSpeed = 0;
+
+                for(Sensor sensor : sensors){
+                        totalTemp += sensor.getMetrics().getTemperature();
+                        totalHumidity += sensor.getMetrics().getHumidity();
+                        totalWindSpeed += sensor.getMetrics().getWindSpeed();
+                }
+                double avgTemp = totalTemp / sensors.size();
+                double avgHumidity = totalHumidity / sensors.size();
+                double avgWindSpeed = totalWindSpeed / sensors.size();
+
+                sensorRepository.findByLocalDateTimeIsGreaterThan(start);
+
+                return getAverages(avgHumidity, avgTemp, avgWindSpeed);
+        }
+
+        public Averages getAverages(double avgHumidity, double avgTemp, double avgWindSpeed) {
+
+                Averages averages = new Averages();
+
+                averages.setAvgHumidity(avgHumidity);
+                averages.setAvgTemp(avgTemp);
+                averages.setAvgWindSpeed(avgWindSpeed);
+
+                return averages;
         }
 }

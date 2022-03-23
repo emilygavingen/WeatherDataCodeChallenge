@@ -19,6 +19,6 @@ public class Sensor{
         private java.time.LocalDateTime localDateTime;
         @Id
         private String metricId;
-        //@Embedded
+        @Embedded
         private Metrics metrics;
 }
