@@ -10,4 +10,5 @@ class WeatherDataCodeChallengeApplicationTests {
 	void contextLoads() {
 	}
 
+
 }
